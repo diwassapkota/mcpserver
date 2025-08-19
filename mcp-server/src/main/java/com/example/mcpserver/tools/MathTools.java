@@ -1,6 +1,6 @@
 package com.example.mcpserver.tools;
 
-import org.springframework.ai.tool.Tool;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
