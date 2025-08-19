@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: "fonepay-mcp-server"
+        version: "1.0.0"
+        # SYNC is fine for simple blocking code; set to ASYNC for reactive handlers
+        type: SYNC
+        # Enable both web (SSE via WebFlux) and stdio transport
+        stdio: true
+        instructions: |
+          This MCP server exposes tools for health checks, math, and merchant queries in TiDB.
+          Use the tools and prompts responsibly. SQL tools are read-only by default.
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: false
+        sse-endpoint: /mcp/sse
+        sse-message-endpoint: /mcp/message
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/REPORTING_DB
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+# Optional CORS for HTTP transport
+mcp:
+  cors:
+    allowed-origins: "*"
